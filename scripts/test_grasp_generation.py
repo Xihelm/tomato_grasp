@@ -182,9 +182,14 @@ for i in range (16, 17): # 31
     bboxes = []
     masks = []
 
-    img_bgr = np.load(path + "rgb_{0}.npy".format(img_index))
-    img_rgb = img_bgr[...,::-1].copy()
+    #img_bgr = np.load(path + "rgb_{0}.npy".format(img_index))
+    img_bgr = cv2.imread("/home/xihelm/Pictures/m0.jpg")
+    print(type(img_bgr))
+    print(img_bgr.shape)
+    #img_rgb = img_bgr[...,::-1].copy()
+    img_rgb = img_bgr.copy()
     result = inference_detector(model, img_rgb)
+    model.show_result(img_rgb, result, out_file='rgb_segmented.jpg')
     for bbox_list, mask_list in zip(result[0], result[1]):
         for bbox, mask in zip(bbox_list, mask_list):
             bboxes.append(bbox)
@@ -203,8 +208,6 @@ for i in range (16, 17): # 31
     im = Image.fromarray(single_tomatoes_all)
     print(i)
     im.save("no_tomato_{0}.png".format(i))
-
-
 
     #    np.zeros_like(img_rgb),
     #)
@@ -286,12 +289,12 @@ for i in range (16, 17): # 31
     depth = np.divide(depth, 1000)
     print(depth)
     cv2.imwrite('DEBUG-plainMask_depth_{0}.png'.format(i), depth)
-    draw_line_widget = DrawLineWidget(image=thinned, depth_image=depth)
-    while True:
-        cv2.imshow('image', draw_line_widget.show_image())
-        key = cv2.waitKey(1)
+    # draw_line_widget = DrawLineWidget(image=thinned, depth_image=depth)
+    # while True:
+    #     cv2.imshow('image', draw_line_widget.show_image())
+    #     key = cv2.waitKey(1)
 
-        # Close program with keyboard 'q'
-        if key == ord('q'):
-            cv2.destroyAllWindows()
-            exit(1)
+    #     # Close program with keyboard 'q'
+    #     if key == ord('q'):
+    #         cv2.destroyAllWindows()
+    #         exit(1)
